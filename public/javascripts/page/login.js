@@ -14,7 +14,6 @@ $(function () {
                     f_Code: $('#f_Code').val(),
                     f_Act: 'login'
                 };
-                console.log(reqData);
                 if( !(reqData.f_UserName && reqData.f_Password && reqData.f_Code) ){
                     testVue.tip = '请正确填写表单，再登录提交！';
                     return;
@@ -27,6 +26,7 @@ $(function () {
                         testVue.tip = [result.flag, result.msg].toString();
                         return;
                     }
+                    testVue.tip = '登录成功';
                     window.document.location = '/';
                 });
             },

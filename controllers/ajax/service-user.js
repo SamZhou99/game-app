@@ -82,24 +82,27 @@ var ajaxFactory = {
                 return;
             }
             if(6 > reqParam.UserName.length || 6 > reqParam.Password.length || reqParam.Act != 'login'){
-                resultData.msg = '请正确输入表单！';
                 res.jsonp( CommonData.NewResultFormat(CommonData.ClientError.FormParam) );
                 return;
             }
             //用户密码md5
             reqParam.Password = CommonUtils.Common.MD5(reqParam.Password);
             //数据库验证
-            DalFactory.Mysql.UserLogin(reqParam.UserName, reqParam.Password, reqParam.IP, reqParam.Session, reqParam.Referer, reqParam.Agent, function(data, resObj){
+            DalFactory.Mysql.UserLogin(reqParam.UserName, reqParam.Password, reqParam.IP, reqParam.Session, reqParam.Referer, reqParam.Agent, function(data){
+                if(data.flag == -1) {
+                    res.jsonp( CommonData.NewResultFormat(CommonData.ClientError.UserLoginError) );
+                    return;
+                }
                 if(data.flag != 0) {
-                    res.jsonp( data );
+                    res.jsonp( data.msg );
                     return;
                 }
                 // var sUserInfo = CommonDataFormat.SessionUserInfo();
-                req.session.IsAdmin = resObj.user_is_admin;
+                req.session.IsAdmin = !!data.data.user_is_admin;
                 req.session.IsLogin = 'true';
-                req.session.UserId = resObj.user_id;
-                req.session.UserName = resObj.user_name;
-                res.jsonp( CommonData.NewSuccessFormat(resObj) );
+                req.session.UserId = data.data.user_id;
+                req.session.UserName = data.data.user_name;
+                res.jsonp( CommonData.NewSuccessFormat(data) );
             });
         },
         //用户信息
