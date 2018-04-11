@@ -15,9 +15,9 @@ module.exports = {
         Mysql:{
             main_db:{
                 host:"127.0.0.1",
-                user:"vps_mysql",
-                password:"aA123456",
-                database:"game_egret"
+                user:"数据库帐号",
+                password:"数据库密码",
+                database:"数据库名称"
             }
         },
         RedisDB0:{
@@ -25,7 +25,7 @@ module.exports = {
             name: 'db_game',
             port: 6379,
             host: '127.0.0.1',
-            opts: {auth_pass:'4dKaVYAKXjN4'}
+            opts: {auth_pass:'密码'}
         }
     },
     //Session
@@ -33,6 +33,6 @@ module.exports = {
         //系统验证码，存储SESSION中的KEY
         verifiyCode:'verifiyCodeKey',
         //session密钥
-        secret:'game_data_qOk3oKfkf8'
+        secret:'qOk3oKfkf8'
     }
 };
