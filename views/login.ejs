@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= Title %></title>
+    <%- include head-javascript.ejs %>
+    <script type="text/javascript" src="/javascripts/page/login.js"></script>
+    <script type="text/javascript">
+        var _PageData = <%- PageData %>;
+    </script>
+</head>
+<body>
+
+<div id="appTest">
+    <h2>{{tip}}</h2>
+    <label form="f_UserName">帐户名：<input id="f_UserName" type="text" placeholder="请输入帐户名" value=""/></label>
+    <label form="f_UserPassword">密　码：<input id="f_UserPassword" type="password" placeholder="请输入密码" value=""/></label>
+    <label form="f_Code">验证码：
+        <input id="f_Code" type="text" placeholder="请输入验证码" value="" maxlength="4"/>
+        <img id="f_CodeImg" src="/verifiyCode" @click="onClickChangeImg()" />
+    </label>
+    <button id="f_EnterBtn" @click="onClickEnterBtn()">登入</button>
+</div>
+
+</body>
+</html>

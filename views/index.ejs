@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= Title %></title>
+    <%- include head-javascript.ejs %>
+    <script type="text/javascript" src="/javascripts/page/index.js"></script>
+    <script type="text/javascript">
+        var _PageData = <%- PageData %>;
+    </script>
+</head>
+<body>
+
+<div id="appTest">
+    <h2>{{tip}}</h2>
+    <ul>
+        <li v-for="(value, key) in msg">
+            {{value}}
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
