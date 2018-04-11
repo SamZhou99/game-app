@@ -98,8 +98,8 @@ var ajaxFactory = {
                     return;
                 }
                 // var sUserInfo = CommonDataFormat.SessionUserInfo();
-                req.session.IsAdmin = !!data.data.user_is_admin;
-                req.session.IsLogin = 'true';
+                req.session.IsAdmin = String(data.data.user_is_admin==1);
+                req.session.IsLogin = String(true);
                 req.session.UserId = data.data.user_id;
                 req.session.UserName = data.data.user_name;
                 res.jsonp( CommonData.NewSuccessFormat(data) );
