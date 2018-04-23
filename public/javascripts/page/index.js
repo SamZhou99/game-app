@@ -2,11 +2,26 @@ $(function () {
     var testVue = new Vue({
         el: '#appTest',
         data: {
+            sending: false,
             tip: 'Loading...',
             msg: [],
             data: {}
         },
-        methods:{}
+        methods:{
+            onLogout:function (e) {
+                if(testVue.sending) return;
+                testVue.sending = true;
+                $.getJSON('/ajax/user/logout', function(result){
+                    testVue.sending = false;
+                    if(result.flag != 0){
+                        testVue.tip = [result.flag, result.msg].toString();
+                        return;
+                    }
+                    testVue.tip = '登出成功';
+                    window.document.location = '/login';
+                });
+            }
+        }
     });
     var This = {
         Io: null,

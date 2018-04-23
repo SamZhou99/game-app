@@ -11,6 +11,10 @@
 <body>
 
 <div id="appTest">
+    <p>
+        <button v-on:click="onLogout">登出</button>
+    </p>
+
     <h2>{{tip}}</h2>
     <ul>
         <li v-for="(value, key) in msg">
