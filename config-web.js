@@ -32,7 +32,11 @@ module.exports = {
     Session:{
         //系统验证码，存储SESSION中的KEY
         verifiyCode:'verifiyCodeKey',
-        //session密钥
-        secret:'qOk3oKfkf8'
+        //session密钥自己设定
+        secret:'123456'
+    },
+    Cookie:{
+        //cookie密钥自己设定
+        secret:'123123'
     }
 };
