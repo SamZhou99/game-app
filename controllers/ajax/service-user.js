@@ -13,6 +13,9 @@ module.exports = {
             case 'login':
                 ajaxFactory.User.UserLogin(req, res, next);
                 break;
+            case 'logout':
+                ajaxFactory.User.UserLogout(req, res, next);
+                break;
 
             default:
                 res.jsonp( CommonData.NewResultFormat(CommonData.ClientError.AjaxError) );
@@ -77,7 +80,6 @@ var ajaxFactory = {
                 return;
             }
             if(reqParam.Code != req.session[Config.Session.verifiyCode]){
-                // req.session[Config.Session.verifiyCode];
                 res.jsonp( CommonData.NewResultFormat(CommonData.ClientError.VerifyCode) );
                 return;
             }
@@ -102,7 +104,31 @@ var ajaxFactory = {
                 req.session.IsLogin = String(true);
                 req.session.UserId = data.data.user_id;
                 req.session.UserName = data.data.user_name;
+                //httpOnly防止xss攻击，signed签名防篡改，maxAge单位毫秒
+                var maxAge = 1000 * 3600 * 24; //24小时
+                res.cookie('UserId', data.data.user_id, {httpOnly: true, signed: true, maxAge: maxAge});
+                res.cookie('UserName', data.data.user_name, {httpOnly: true, signed: true, maxAge: maxAge});
                 res.jsonp( CommonData.NewSuccessFormat(data) );
+            });
+        },
+        //用户登出
+        UserLogout:function(req, res, next){
+            var reqParam = {
+                UserId: req.session.UserId,
+                Session: req.session.id
+            };
+            DalFactory.Mysql.UserLogout(reqParam.UserId, reqParam.Session, function (data, result) {
+                if(data.flag != 0){
+                    res.jsonp( data.msg );
+                    return;
+                }
+                req.session.IsAdmin = null;
+                req.session.IsLogin = String(false);
+                req.session.UserId = null;
+                req.session.UserName = null;
+                res.clearCookie('UserId');
+                res.clearCookie('UserName');
+                res.jsonp( CommonData.NewSuccessFormat() );
             });
         },
         //用户信息

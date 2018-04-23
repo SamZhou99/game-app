@@ -22,8 +22,8 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-//Cookie设置
-app.use(cookieParser());
+//Cookie设置 并 设置
+app.use(cookieParser(Config.Cookie.secret));
 //Session设置
 app.use(session({
     // store: new RedisStore(Config.Redis.Session),
